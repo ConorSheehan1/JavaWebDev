@@ -1,0 +1,5 @@
+# ignore intellij project files
+/.idea
+
+/lib
+/out
