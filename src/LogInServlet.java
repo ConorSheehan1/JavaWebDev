@@ -7,8 +7,29 @@ import java.io.IOException;
 
 @WebServlet(urlPatterns = "/login")
 public class LogInServlet extends HttpServlet {
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.getWriter().println("dummy");
+        req.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(req, resp);
+    }
+
+    //post request to handle form submission
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        //hard coded validation
+        String email = req.getParameter("email");
+        String password = req.getParameter("password");
+
+        req.setAttribute("email", email);
+        req.setAttribute("password", password);
+
+        if(email.equals("accept@gmail.com")){
+            req.getRequestDispatcher("/WEB-INF/views/login-success.jsp").forward(req, resp);
+        }
+        else {
+            req.setAttribute("error", "incorrect email, please try again");
+            req.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(req, resp);
+        }
     }
 }
